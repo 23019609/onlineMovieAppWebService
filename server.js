@@ -67,7 +67,7 @@ app.post('/updatemovie', async(req, res) => {
 })
 
 // deletemovie route using get
-app.get(`/deletemovie/${id}`, async (req, res) => {
+app.get(`/deletemovie/:id`, async (req, res) => {
     try {
         let connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('DELETE FROM movies WHERE id = id VALUES (?)', [id]);
