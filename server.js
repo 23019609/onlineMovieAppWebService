@@ -74,7 +74,7 @@ app.get('/deletemovie/:id', async (req, res) => {
         res.json(rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({message: 'Server error - could not delete movie using get ' + movie_name});
+        res.status(500).json({message: 'Server error - could not delete movie using get ' + id});
     }
 });
 
@@ -86,7 +86,7 @@ app.post('/deletemovie', async(req, res) => {
         // example delete sql
         // DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'
         await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
-        res.status(201).json({message: 'Movie ' + movie_name + ' deleted successfully'});
+        res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
     } catch (err) {
         console.error(err);
         res.status(500).json({message: 'Server error - could not delete movie using post ' + movie_name});
