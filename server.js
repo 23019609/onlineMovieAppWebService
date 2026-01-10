@@ -58,7 +58,7 @@ app.post('/updatemovie', async(req, res) => {
         let connection = await mysql.createConnection(dbConfig);
         // example update sql
         // UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1
-        await connection.execute('UPDATE movies SET (movie_name, movie_year, movie_pic) VALUES (?, ?, ?) WHERE id = id', [id, movie_name, movie_year, movie_pic]);
+        await connection.execute('UPDATE movies SET movie_name = ?, movie_year = ?, movie_pic = ? WHERE id = ?', [movie_name, movie_year, movie_pic, id]);
         res.status(201).json({message: 'Movie ' + movie_name + ' updated successfully'});
     } catch (err) {
         console.error(err);
