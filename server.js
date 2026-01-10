@@ -90,6 +90,6 @@ app.post('/deletemovie', async(req, res) => {
         res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
     } catch (err) {
         console.error(err);
-        res.status(500).json({message: 'Server error - could not delete movie using post ' + movie_name});
+        res.status(500).json({message: 'Server error - could not delete movie using post ' + id});
     }
 })
