@@ -49,7 +49,7 @@ app.post('/addmovie', async(req, res) => {
         console.error(err);
         res.status(500).json({message: 'Server error - could not add movie ' + movie_name});
     }
-})
+});
 
 // updatemovie route
 app.post('/updatemovie', async(req, res) => {
@@ -64,7 +64,7 @@ app.post('/updatemovie', async(req, res) => {
         console.error(err);
         res.status(500).json({message: 'Server error - could not update movie ' + movie_name});
     }
-})
+});
 
 // deletemovie route using get
 app.get('/deletemovie/:id', async (req, res) => {
@@ -72,7 +72,7 @@ app.get('/deletemovie/:id', async (req, res) => {
     try {
         let connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
-        res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
+        res.json(rows);
     } catch (err) {
         console.error(err);
         res.status(500).json({message: 'Server error - could not delete movie using get ' + id});
@@ -92,4 +92,4 @@ app.post('/deletemovie', async(req, res) => {
         console.error(err);
         res.status(500).json({message: 'Server error - could not delete movie using post ' + id});
     }
-})
+});
