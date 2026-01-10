@@ -26,7 +26,7 @@ https://onlinemovieappwebservice-oz70.onrender.com/updatemovie
 Delete card using GET:
 https://onlinemovieappwebservice-oz70.onrender.com/deletemovie/15
 
-Delete card using GET:
+Delete card using POST:
 https://onlinemovieappwebservice-oz70.onrender.com/deletemovie
 
 {
