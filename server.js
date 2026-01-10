@@ -71,7 +71,8 @@ app.get('/deletemovie/:id', async (req, res) => {
     const {id} = req.params;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        const [rows] = await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
+        await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
+        const [rows] = await connection.execute('SELECT * FROM defaultdb.movies');
         res.json(rows);
     } catch (err) {
         console.error(err);
