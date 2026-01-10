@@ -68,10 +68,11 @@ app.post('/updatemovie', async(req, res) => {
 
 // deletemovie route using get
 app.get('/deletemovie/:id', async (req, res) => {
+    const {id} = req.params;
     try {
         let connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
-        res.json(rows);
+        res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
     } catch (err) {
         console.error(err);
         res.status(500).json({message: 'Server error - could not delete movie using get ' + id});
