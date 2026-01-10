@@ -67,10 +67,10 @@ app.post('/updatemovie', async(req, res) => {
 })
 
 // deletemovie route using get
-app.get(`/deletemovie/:id`, async (req, res) => {
+app.get('/deletemovie/:id', async (req, res) => {
     try {
         let connection = await mysql.createConnection(dbConfig);
-        const [rows] = await connection.execute('DELETE FROM movies WHERE id = id VALUES (?)', [id]);
+        const [rows] = await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
         res.json(rows);
     } catch (err) {
         console.error(err);
@@ -85,7 +85,7 @@ app.post('/deletemovie', async(req, res) => {
         let connection = await mysql.createConnection(dbConfig);
         // example delete sql
         // DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'
-        await connection.execute('DELETE FROM movies WHERE id = id VALUES (?)', [id]);
+        await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
         res.status(201).json({message: 'Movie ' + movie_name + ' deleted successfully'});
     } catch (err) {
         console.error(err);
