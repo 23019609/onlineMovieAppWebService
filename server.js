@@ -51,46 +51,73 @@ app.post('/addmovie', async(req, res) => {
     }
 });
 
-// updatemovie route
-app.post('/updatemovie', async(req, res) => {
-    const {id, movie_name, movie_year, movie_pic} = req.body;
-    try {
+// update movie
+app.put('/updatemovie/:id', async (req, res) => {
+    const { id } = req.params;
+    const { movie_name, movie_year, movie_pic } = req.body;
+    try{
         let connection = await mysql.createConnection(dbConfig);
-        // example update sql
-        // UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1
-        await connection.execute('UPDATE movies SET movie_name = ?, movie_year = ?, movie_pic = ? WHERE id = ?', [movie_name, movie_year, movie_pic, id]);
-        res.status(201).json({message: 'Movie ' + movie_name + ' updated successfully'});
+        await connection.execute('UPDATE movies SET movie_name=?, movie_year=?, movie_pic=? WHERE id=?', [movie_name, movie_year, movie_pic, id]);
+        res.status(201).json({ message: 'Movie ' + id + ' updated successfully!' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({message: 'Server error - could not update movie ' + movie_name});
+        res.status(500).json({ message: 'Server error - could not update movie ' + id });
     }
 });
 
-// deletemovie route using get
-app.get('/deletemovie/:id', async (req, res) => {
-    const {id} = req.params;
-    try {
+// delete movie
+app.delete('/deletemovie/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
-        const [rows] = await connection.execute('SELECT * FROM defaultdb.movies');
-        res.json(rows);
+        await connection.execute('DELETE FROM movies WHERE id=?', [id]);
+        res.status(201).json({ message: 'Movie ' + id + ' deleted successfully!' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({message: 'Server error - could not delete movie using get ' + id});
+        res.status(500).json({ message: 'Server error - could not delete movie ' + id });
     }
 });
 
-// deletemovie route using post
-app.post('/deletemovie', async(req, res) => {
-    const {id} = req.body;
-    try {
-        let connection = await mysql.createConnection(dbConfig);
-        // example delete sql
-        // DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'
-        await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
-        res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({message: 'Server error - could not delete movie using post ' + id});
-    }
-});
+// // updatemovie route
+// app.post('/updatemovie', async(req, res) => {
+//     const {id, movie_name, movie_year, movie_pic} = req.body;
+//     try {
+//         let connection = await mysql.createConnection(dbConfig);
+//         // example update sql
+//         // UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1
+//         await connection.execute('UPDATE movies SET movie_name = ?, movie_year = ?, movie_pic = ? WHERE id = ?', [movie_name, movie_year, movie_pic, id]);
+//         res.status(201).json({message: 'Movie ' + movie_name + ' updated successfully'});
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({message: 'Server error - could not update movie ' + movie_name});
+//     }
+// });
+//
+// // deletemovie route using get
+// app.get('/deletemovie/:id', async (req, res) => {
+//     const {id} = req.params;
+//     try {
+//         let connection = await mysql.createConnection(dbConfig);
+//         await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
+//         const [rows] = await connection.execute('SELECT * FROM defaultdb.movies');
+//         res.json(rows);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({message: 'Server error - could not delete movie using get ' + id});
+//     }
+// });
+//
+// // deletemovie route using post
+// app.post('/deletemovie', async(req, res) => {
+//     const {id} = req.body;
+//     try {
+//         let connection = await mysql.createConnection(dbConfig);
+//         // example delete sql
+//         // DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste'
+//         await connection.execute('DELETE FROM movies WHERE id = ?', [id]);
+//         res.status(201).json({message: 'Movie ' + id + ' deleted successfully'});
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({message: 'Server error - could not delete movie using post ' + id});
+//     }
+// });
